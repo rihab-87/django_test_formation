@@ -15,8 +15,7 @@ a h4{
 
 a h4:hover {
     text-decoration: none;
-     color:#a332b5e8;
-     transform: scale(1.10); 
+     color:#a332b5e8; 
    
 }
 .ajou_formation_style{
@@ -73,9 +72,9 @@ opacity: .5;
     background-color: white;
     box-shadow: 1px 1px 10px 1px;
 }
-.tab-shadow:hover{
-    transform: scale(1.10);
-} 
+/* .tab-shadow:hover{
+ 
+}  */
 .ajout_chap_style{
 display: flex;
 justify-content: flex-start;
@@ -93,7 +92,6 @@ text-decoration: none ;
 }
 a h5:hover {
     text-decoration: none;
-    transform: scale(1.10);
    
 }
 .button_style{
