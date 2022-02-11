@@ -1,0 +1,122 @@
+{% extends 'base.html'%} {% load static %} {% block content %}
+
+<!-- NAVBAR -------------->
+<nav class="navbar sticky-top navbar-light bg-light">
+  <div class="container-fluid">
+    
+    <a href=""  class="navbar-brand ajou_formation_style" data-bs-toggle="modal" data-bs-target="#exampleModal"> <h4> Ajouter une formation</h4> </a>
+    <!-- <span class="navbar-brand mb-0 titre_style h4">Formations</span> -->
+  </div>
+</nav>
+
+<!--------->
+<div class="container container_style">
+  <!-- <h1 class="titre_style">FORMATION</h1> -->
+  <div class="container">
+    <!-- <div class="row">
+     
+    </div> -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ajouter une nouvelle formation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form action="{% url 'addFormation' %}" method="POST">
+              {% csrf_token %}  {{formF.as_p}}
+
+              <input type="submit" class="btn  button_style" value="save" />
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn button_style " data-bs-dismiss="modal">
+              close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row formation_table">
+
+      {%for f in formation %}
+      <div style=" margin-bottom: 30px;">
+      <table class="table table-responsive  table-light table-hover tab-shadow  table-sm">
+        <thead class="table-secondary">
+          <tr>
+            <th class="titre_formatio_style">
+              <h2 class="titre_formation">{{f.titre}}</h2>
+              
+            </th>
+            <th class="edit_supp_style"> <a href="{%url 'supFormation' f.id%}" > <img src="{% static 'delete.png' %}" style="width: 20px ;margin-right:10px"/></a></th>
+          </tr>
+        </thead>
+        <tbody class="container_1">
+          {% for c in chapitre %}
+          <tr class="draggable" draggable="true">
+            {% if c.formation_id == f.id %}
+            <td class="titre_chap_style"> 
+              {% if c.id == edit %}
+                <div >
+                  
+                  <form action ="{% url 'edit_Chapitre' c.id %}" method="POST">
+                    {% csrf_token %}
+                  
+                    {{formC.nom_chapitre}}
+                    <input
+                    type="submit"
+                    class="btn button_style"
+                    value="save"
+                    />
+                  </form>
+                </div>
+              {% else %}
+                <h5>{{c.nom_chapitre}}</h5>
+            </td> 
+            {% endif %}
+            <td class="edit_supp_style">
+              <a href="{%url 'editChapitre' c.id%}" ><img src="{% static 'editing.png' %}" style="width: 20px;margin-right:10px"/></a>
+              <a href="{%url 'supChapitre' c.id%}" > <img src="{% static 'delete.png' %}" style="width: 20px ;margin-right:10px"/></a>
+            </td>
+            {% endif %}
+   
+          </tr>
+        {% endfor %}
+   
+    
+ 
+          <tr class="draggable" draggable="true">
+            <td>
+              <a href ="{% url 'addChapitre' f.id %}"  class="link_style"><div class="ajout_chap_style"> <img src="{% static 'plus (1).png' %}" style="width: 30px;margin-right:10px"/> <h5 >ajouter un nouveau chapitre</h5></div> </a>
+            </td>
+            <td>
+              {% if f.id == add  %} 
+            
+              <div >
+                <form action ="{% url 'add_nouveau_Chapitre' f.id %}" method="POST">
+                  <div style="display:flex;justify-content:flex-end">
+                    {% csrf_token %}
+                    {{formC.nom_chapitre}}
+                    <input type="submit" class=" btn button_style" value="save"/> 
+                  </div>
+                </form>
+              </div>
+              {% endif %}
+            </td>
+            
+          </tr>
+        
+    
+          </tbody>
+        </table>
+      </div>
+      {% endfor %}
+      
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}
